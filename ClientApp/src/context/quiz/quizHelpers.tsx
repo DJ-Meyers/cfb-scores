@@ -17,7 +17,7 @@ export const shuffleGames = (games: Game[]) => {
         ];
     }
 
-    return games.slice(0, 3);
+    return games.slice(0, 10);
 }
 
 export const getAbbr = (teamName: string) => {
