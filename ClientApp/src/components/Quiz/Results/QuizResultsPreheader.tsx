@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { QuizContext } from '../../../context/quiz/quizContext';
 import { RESET_QUIZ } from '../../../context/Types';

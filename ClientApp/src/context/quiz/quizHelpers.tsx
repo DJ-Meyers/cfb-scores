@@ -25,7 +25,7 @@ export const getAbbr = (teamName: string) => {
     if (team) {
         return team.alt_name2;
     } else {
-        return 'N/A';
+        return teamName;
     }
 }
 

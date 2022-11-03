@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { QuizContext } from '../../../context/quiz/quizContext';
 import { IconContext } from 'react-icons';
 import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
