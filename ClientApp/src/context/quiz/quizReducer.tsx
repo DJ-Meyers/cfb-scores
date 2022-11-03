@@ -36,6 +36,7 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 isLoading: false,
             };
         case PUT_STATE_IN_LOCAL_STORAGE:
+            localStorage.removeItem('quizState');
             localStorage.setItem('quizState', JSON.stringify(state));
             return {
                 ...state,
@@ -101,7 +102,6 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
             const newIndex = state.questionIndex + 1;
 
             newCurrent = newIndex < state.selectedQuestions.length ? state.selectedQuestions[newIndex] : null;
-            // console.log(newCurrent, newIndex);
             return {
                 ...state,
                 questionIndex: newIndex,

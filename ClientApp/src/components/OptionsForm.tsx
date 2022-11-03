@@ -38,8 +38,42 @@ export const OptionsForm = () => {
     const { dispatch } = useContext(QuizContext);
     const navigate = useNavigate();
 
-    const spicyMode = () => {
-        console.log("Let's Get Spicy!");
+    async function generateQuiz(formData: FormData) {
+        await axios({
+            method: 'post',
+            url: '/teamdata/',
+            data: formData,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        }).then((res) => {
+            setLoading(false);
+
+            dispatch({
+                type: INITIALIZE_QUIZ,
+                payload: { games: res.data, team: formData.get('name') },
+            });
+            dispatch({ type: PUT_STATE_IN_LOCAL_STORAGE });
+
+            navigate('/quiz');
+        });
+    }
+
+    const spicyMode = async () => {
+        const formData = new FormData();
+        const team = teams[Math.round(Math.random() * teams.length)];
+        const startYear = Math.round(Math.random() * (maxYear - minYear - 10) + minYear);
+        const endYear = startYear + 10;
+        const teamStr = team ? team.school : ''
+        console.log(teamStr, startYear, endYear);
+        formData.append('name', teamStr);
+        formData.append('startYear', startYear.toString());
+        formData.append('endYear', endYear.toString());
+
+        setLoading(true);
+
+        await generateQuiz(formData);
+
     };
 
     const onSubmit = async (data: any, e: any) => {
@@ -51,23 +85,7 @@ export const OptionsForm = () => {
 
         setLoading(true);
 
-        await axios({
-            method: 'post',
-            url: '/teamdata/',
-            data: formData,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        }).then((res) => {
-            dispatch({
-                type: INITIALIZE_QUIZ,
-                payload: { games: res.data, team: data.team },
-            });
-
-            dispatch({ type: PUT_STATE_IN_LOCAL_STORAGE });
-
-            navigate('/quiz');
-        });
+        generateQuiz(formData);
     };
 
     const onError = (errors: any, e: any) => console.log(errors);
