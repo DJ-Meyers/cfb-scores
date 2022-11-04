@@ -9,7 +9,9 @@ export const QuizResultsActions = () => {
 
     const getShareableString = () => {
         const rows = [];
-        rows.push(`${getAbbr(state.team)} ${state.startYear}-${state.endYear} ${state.numCorrect}/${state.selectedQuestions.length}`);
+        const startYearStr = state.startYear.toString().substring(2, 4);
+        const endYearStr = state.endYear.toString().substring(2, 4);
+        rows.push(`${getAbbr(state.team)} '${startYearStr}-'${endYearStr} ${state.numCorrect}/${state.selectedQuestions.length}`);
         rows.push('');
         state.selectedQuestions.forEach((game, index) => {
             const dateString = new Date(game.startDate).toLocaleDateString()
