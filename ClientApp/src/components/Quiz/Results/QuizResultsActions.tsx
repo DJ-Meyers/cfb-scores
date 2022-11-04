@@ -16,6 +16,7 @@ export const QuizResultsActions = () => {
             const correct = state.correctArray[index];
             rows.push(`${correct ? '✅' : '❌'} ${getAbbr(game.awayTeam)}@${getAbbr(game.homeTeam)} '${dateString.substring(dateString.length - 2)}`);
         });
+        rows.push('https://bit.ly/cfb-record-quiz');
         return rows.join("\n");
     }
 
