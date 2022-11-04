@@ -5,7 +5,7 @@ import { RESET_QUIZ } from '../../../context/Types';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 
 export const QuizResultsPreheader = () => {
-    const { state, dispatch } = useContext(QuizContext);
+    const { dispatch } = useContext(QuizContext);
     const navigate = useNavigate();
 
     const reset = () => {
