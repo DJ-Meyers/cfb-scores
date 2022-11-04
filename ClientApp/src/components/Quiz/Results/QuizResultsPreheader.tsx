@@ -15,14 +15,13 @@ export const QuizResultsPreheader = () => {
 
     return (
         <div>
-            <div className='flex justify-center items-center relative mb-6 w-full'>
+            <div className='flex justify-start items-center relative mb-6 w-full'>
                 <button
-                    className='flex items-center gap-1 opacity-50 hover:opacity-100 absolute left-0 top-[2px]'
+                    className='flex items-center gap-1 opacity-50 hover:opacity-100'
                     onClick={reset}
                 >
                     <RiArrowGoBackFill /> Back
                 </button>
-                <h2 className='font-bold text-xl'>{state.team} Quiz Results</h2>
             </div>
         </div>
     );

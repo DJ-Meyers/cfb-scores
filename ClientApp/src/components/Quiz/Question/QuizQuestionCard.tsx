@@ -11,7 +11,7 @@ export const QuizQuestionCard = () => {
             {state.currentQuestion &&
                 <div
                     className={
-                        'h-[250px] w-full my-6 bg-white rounded-xl p-6 flex flex-col shadow-sm relative'
+                        'h-[250px] w-full my-6 bg-white rounded-xl p-6 flex flex-col shadow-md relative'
                     }
                 >
                     {state.isBetweenQuestions ? (
@@ -20,7 +20,8 @@ export const QuizQuestionCard = () => {
                             <IconContext.Provider
                                 value={{
                                     className:
-                                        'text-green-500 absolute top-6 right-6',
+                                            'text-green-500 absolute top-6 right-6',
+                                    size: '20px'
                                 }}
                             >
                                 <HiCheckCircle />
@@ -30,6 +31,7 @@ export const QuizQuestionCard = () => {
                                 value={{
                                     className:
                                         'text-red-500 absolute top-6 right-6',
+                                    size: '20px'
                                 }}
                             >
                                 <HiXCircle />

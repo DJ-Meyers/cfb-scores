@@ -8,7 +8,7 @@ export const QuizResultsCard = () => {
     const { state } = useContext(QuizContext);
 
     return (
-        <div className='w-full my-6 bg-white rounded-xl p-6 flex flex-col shadow-sm relative'>
+        <div className='w-full my-6 bg-white rounded-xl p-6 flex flex-col shadow-md relative'>
             <h3 className='mb-3 text-xl font-semibold text-center'>{state.numCorrect}/{state.selectedQuestions.length}: {percent(safeDivide(state.numCorrect, state.selectedQuestions.length))}</h3>
             <table>
                 <thead>
@@ -22,7 +22,7 @@ export const QuizResultsCard = () => {
                     {state.selectedQuestions &&
                         state.selectedQuestions.map((q, i) => {
                             return (
-                                <tr key={q.startDate}>
+                                <tr key={q.startDate} className={`${i % 2 === 1 && 'bg-gray-100'}`}>
                                     <td>
                                         {new Date(
                                             q.startDate
@@ -31,13 +31,14 @@ export const QuizResultsCard = () => {
                                     <td>
                                         {getAbbr(q.homeTeam)} {q.homePoints} - {q.awayPoints} {getAbbr(q.awayTeam)}
                                     </td>
-                                    <td>
-                                        {state.choicesArray[i] ? 'Win' : 'Loss'}{' '}
+                                    <td className='flex justify-between items-center'>
+                                        <span>{state.choicesArray[i] ? 'Win' : 'Loss'}</span>
                                         {state.correctArray[i] ? (
                                             <IconContext.Provider
                                                 value={{
                                                     className:
-                                                        'text-green-500 top-6 right-6 inline',
+                                                        'text-green-500 inline ml-1.5',
+                                                    size: '20px'
                                                 }}
                                             >
                                                 <HiCheckCircle />
@@ -46,7 +47,8 @@ export const QuizResultsCard = () => {
                                             <IconContext.Provider
                                                 value={{
                                                     className:
-                                                        'text-red-500 top-6 right-6 inline',
+                                                        'text-red-500 inline ml-1.5',
+                                                    size: '20px'
                                                 }}
                                             >
                                                 <HiXCircle />

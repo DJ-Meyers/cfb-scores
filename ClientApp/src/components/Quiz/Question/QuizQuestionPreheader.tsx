@@ -43,7 +43,6 @@ export const QuizQuestionPreheader = () => {
                 >
                     <RiArrowGoBackFill /> Back
                 </button>
-                <h2 className='font-bold text-xl'>{state.team} Quiz</h2>
                 <h3 className='opacity-100 text-sm uppercase font-semibold'>
                     Q{state.questionIndex + 1} of {state.selectedQuestions.length}
                 </h3>

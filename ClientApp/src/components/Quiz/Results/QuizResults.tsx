@@ -5,7 +5,7 @@ import { QuizResultsPreheader } from "./QuizResultsPreheader";
 
 export const QuizResults = () => {
     return (
-        <div className="w-[400px]">
+        <div className="w-96">
             <QuizResultsPreheader />
             <QuizResultsCard />
             <QuizResultsActions />

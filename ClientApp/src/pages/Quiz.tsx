@@ -22,7 +22,10 @@ export const Quiz = () => {
     }, []);
 
     return (
-        <div className='opacity-75 flex justify-start items-center flex-col mx-auto pt-56 '>
+        <div className='flex justify-start items-center flex-col mx-auto w-96 pt-8 '>
+            <h1 className='mb-3 opacity-100 text-3xl font-semibold w-full text-center'>
+                {state.team} Quiz
+            </h1>
             {state.questionIndex < state.selectedQuestions.length ? <QuizQuestion /> : <QuizResults />}
         </div>
     );

@@ -7,6 +7,9 @@ import { teams } from '../data/teams';
 import { useNavigate } from 'react-router-dom';
 import { QuizContext } from '../context/quiz/quizContext';
 import { INITIALIZE_QUIZ, PUT_STATE_IN_LOCAL_STORAGE } from '../context/Types';
+import { IconContext } from 'react-icons';
+import { GiPerspectiveDiceSixFacesThree } from 'react-icons/gi';
+import { CgSpinner } from 'react-icons/cg';
 
 export const OptionsForm = () => {
 
@@ -59,7 +62,7 @@ export const OptionsForm = () => {
         });
     }
 
-    const spicyMode = async () => {
+    const generateRandomQuiz = async () => {
         const formData = new FormData();
         const team = teams[Math.round(Math.random() * teams.length)];
         const startYear = Math.round(Math.random() * (maxYear - minYear - 10) + minYear);
@@ -152,12 +155,21 @@ export const OptionsForm = () => {
             </div>
             <div id='btns-container' className='flex gap-3'>
                 {loading ? (
-                    <input
-                        className='bg-cyan-600 opacity-75 text-white font-medium rounded-md p-3 grow cursor-not-allowed'
+                    <button
+                        className='bg-cyan-600 text-white font-medium rounded-md p-3 grow cursor-not-allowed flex items-center justify-center'
                         type='submit'
                         disabled
-                        value='Creating Your Quiz...'
-                    />
+                    >
+                        <IconContext.Provider
+                            value={{
+                                className: 'animate-spin mr-1.5',
+                                size: '24px'
+                            }}
+                        >
+                            <CgSpinner />
+                        </IconContext.Provider>
+                        <span>Creating Your Quiz</span>
+                    </button>
                 ) : (
                     <input
                         className={`text-white font-medium rounded-md p-3 grow ${
@@ -168,12 +180,20 @@ export const OptionsForm = () => {
                         disabled={watchTeam === selectTeamString}
                     />
                 )}
-                <input
-                    className='bg-orange-500 text-white font-medium rounded-md p-3 w-12 cursor-pointer'
+                <button
+                    className='bg-orange-400 font-medium rounded-md p-3 w-12 cursor-pointer'
                     type='button'
-                    onClick={spicyMode}
-                    value='🌶️'
-                />
+                    onClick={generateRandomQuiz}
+                >
+                    <IconContext.Provider
+                        value={{
+                            color: 'white',
+                            size: '24px'
+                        }}
+                    >
+                        <GiPerspectiveDiceSixFacesThree />
+                    </IconContext.Provider>
+                </button>
             </div>
         </form>
     );
