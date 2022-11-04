@@ -54,7 +54,7 @@ export const OptionsForm = () => {
 
             dispatch({
                 type: INITIALIZE_QUIZ,
-                payload: { games: res.data, team: formData.get('name') },
+                payload: { games: res.data, team: formData.get('name'), startYear: formData.get('startYear'), endYear: formData.get('endYear') },
             });
             dispatch({ type: PUT_STATE_IN_LOCAL_STORAGE });
 
@@ -68,7 +68,6 @@ export const OptionsForm = () => {
         const startYear = Math.round(Math.random() * (maxYear - minYear - 10) + minYear);
         const endYear = startYear + 10;
         const teamStr = team ? team.school : ''
-        console.log(teamStr, startYear, endYear);
         formData.append('name', teamStr);
         formData.append('startYear', startYear.toString());
         formData.append('endYear', endYear.toString());
@@ -173,7 +172,7 @@ export const OptionsForm = () => {
                 ) : (
                     <input
                         className={`text-white font-medium rounded-md p-3 grow ${
-                            watchTeam !== selectTeamString ? 'bg-cyan-600 cursor-pointer' : 'bg-gray-500 cursor-not-allowed'
+                            watchTeam !== selectTeamString ? 'bg-cyan-600 cursor-pointer' : 'bg-gray-400 cursor-not-allowed'
                         }`}
                         type='submit'
                         value='Get Started'

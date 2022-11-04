@@ -14,6 +14,8 @@ export type InitialQuizStateType = {
     isBetweenQuestions: boolean;
     currentQuestion: Game | null;
     team: string;
+    startYear: number;
+    endYear: number;
     isLoading: boolean;
 };
 
@@ -30,6 +32,8 @@ const initialState = {
     isBetweenQuestions: false,
     currentQuestion: null,
     team: '',
+    startYear: 0,
+    endYear: 0,
     isLoading: false,
 };
 

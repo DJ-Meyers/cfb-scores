@@ -8,5 +8,4 @@ export interface Game {
     homeTeam: string,
     awayPoints: number,
     awayTeam: string,
-    awayAbbr: string,
 }

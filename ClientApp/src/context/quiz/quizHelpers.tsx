@@ -1,7 +1,7 @@
 import { Game } from "../../data/game";
 import { Team, teams } from "../../data/teams";
 
-export const shuffleGames = (games: Game[]) => {
+export const shuffleGames = (games: Game[]): Game[] => {
     let currentIndex = games.length, randomIndex;
 
     // While there remain elements to shuffle.
@@ -20,7 +20,7 @@ export const shuffleGames = (games: Game[]) => {
     return games.slice(0, 10);
 }
 
-export const getAbbr = (teamName: string) => {
+export const getAbbr = (teamName: string): string => {
     const team: Team | undefined = teams.find((t) => t.school === teamName);
     if (team) {
         return team.alt_name2;
@@ -29,13 +29,56 @@ export const getAbbr = (teamName: string) => {
     }
 }
 
-export const safeDivide = (numerator: number, divisor: number) => {
+export const safeDivide = (numerator: number, divisor: number): number => {
     if (divisor === 0)
         return 0;    
 
     return numerator / divisor;
 }
 
-export const percent = (num: number) => {
+export const percent = (num: number): string => {
     return `${(num * 100).toFixed(0)}%`
 }
+
+// const getColors = (team: Team): [string, string] => {
+//     return [team.color, team.alt_color];
+// }
+
+// const hexToRgb = (hex: string): [number, number, number] => {
+//     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+//     return result ? [
+//         parseInt(result[1], 16),
+//         parseInt(result[2], 16),
+//         parseInt(result[3], 16)
+//     ] : [0, 0, 0];
+// }
+
+// const colors = {
+//     '🟥': { r: 255, g: 0, b: 0 },
+//     '🟧': { r: 204, g: 102, b: 0 },
+//     '🟨': { r: 255, g: 255, b: 0 },
+//     '🟩': { r: 0, g: 255, b: 0 },
+//     '🟦': { r: 0, g: 0, b: 255 },
+//     '🟪': { r: 153, g: 0, b: 255 },
+//     '🟫': { r: 153, g: 51, b: 0 },
+//     '⬛': { r: 0, g: 0, b: 0 },
+//     '⬜': { r: 255, g: 255, b: 255 },
+// }
+
+// const getEmojiFromHex = (hex: string): string => {
+//     const [ r, g, b ] = hexToRgb(hex);
+//     const colorDiffs = [];
+
+//     // TODO: Calc distance
+//     return '';
+// }
+
+// export const getEmojiColors = (teamName: string): string => {
+//     const team: Team | undefined = teams.find((t) => t.school === teamName);
+//     if (!team) {
+//         return getAbbr(teamName);
+//     }
+//     const [primary, secondary] = getColors(team);
+
+//     return `${getEmojiFromHex(primary)}${getEmojiFromHex(secondary)}`;
+// }

@@ -10,7 +10,7 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
             const questions = shuffleGames(games);
             return {
                 ...state,
-                games: action.payload,
+                games: games,
                 selectedQuestions: questions,
                 questionIndex: 0,
                 numCorrect: 0,
@@ -18,6 +18,8 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 numAttempted: 0,
                 currentQuestion: questions[0],
                 team: action.payload.team,
+                startYear: action.payload.startYear,
+                endYear: action.payload.endYear,
             };
         case RESET_QUIZ:
             return {
@@ -47,12 +49,18 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 ...state,
                 games: newState.games,
                 selectedQuestions: newState.selectedQuestions,
-                team: newState.team,
+                questionIndex: newState.questionIndex,
                 numCorrect: newState.numCorrect,
                 numIncorrect: newState.numIncorrect,
                 numAttempted: newState.numAttempted,
-                questionIndex: newState.questionIndex,
+                correctArray: newState.correctArray,
+                choicesArray: newState.choicesArray,
+                isBetweenQuestions: newState.isBetweenQuestions,
                 currentQuestion: newState.currentQuestion,
+                team: newState.team,
+                startYear: newState.startYear,
+                endYear: newState.endYear,
+                isLoading: newState.isLoading,
             };
 
         case SUBMIT_ANSWER:
