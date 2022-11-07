@@ -63,7 +63,8 @@ export const OptionsForm = () => {
     }
 
     useEffect(() => {
-        dispatch({ type: RESET_QUIZ })
+        dispatch({ type: RESET_QUIZ });
+        // eslint-disable-next-line
     }, []);
 
     const generateRandomQuiz = async () => {

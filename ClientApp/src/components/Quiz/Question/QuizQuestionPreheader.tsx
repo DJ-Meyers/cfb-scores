@@ -1,14 +1,11 @@
 import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import { QuizContext } from '../../../context/quiz/quizContext';
-import { RESET_QUIZ } from '../../../context/Types';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 
 export const QuizQuestionPreheader = () => {
     
-    const { state, dispatch } = useContext(QuizContext);
-    const navigate = useNavigate();
+    const { state } = useContext(QuizContext);
 
     useEffect(() => {
         const plus1 = document.getElementById('plus-1');

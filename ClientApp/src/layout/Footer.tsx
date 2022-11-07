@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconContext } from 'react-icons';
-import { AiFillHeart, AiFillGithub }  from 'react-icons/ai';
+import { AiFillGithub }  from 'react-icons/ai';
 
 export const Footer = () => {
 
