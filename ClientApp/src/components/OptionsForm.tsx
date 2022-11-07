@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import axios from 'axios';
 import { teams } from '../data/teams';
 import { useNavigate } from 'react-router-dom';
 import { QuizContext } from '../context/quiz/quizContext';
-import { INITIALIZE_QUIZ, PUT_STATE_IN_LOCAL_STORAGE } from '../context/Types';
+import { INITIALIZE_QUIZ, PUT_STATE_IN_LOCAL_STORAGE, RESET_QUIZ } from '../context/Types';
 import { IconContext } from 'react-icons';
 import { GiPerspectiveDiceSixFacesThree } from 'react-icons/gi';
 import { CgSpinner } from 'react-icons/cg';
@@ -61,6 +61,10 @@ export const OptionsForm = () => {
             navigate('/quiz');
         });
     }
+
+    useEffect(() => {
+        dispatch({ type: RESET_QUIZ })
+    }, []);
 
     const generateRandomQuiz = async () => {
         const formData = new FormData();

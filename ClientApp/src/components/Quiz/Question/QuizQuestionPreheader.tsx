@@ -3,16 +3,12 @@ import { useNavigate } from 'react-router';
 import { QuizContext } from '../../../context/quiz/quizContext';
 import { RESET_QUIZ } from '../../../context/Types';
 import { RiArrowGoBackFill } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 
 export const QuizQuestionPreheader = () => {
     
     const { state, dispatch } = useContext(QuizContext);
     const navigate = useNavigate();
-    
-    const reset = () => {
-        dispatch({ type: RESET_QUIZ });
-        navigate('/');
-    };
 
     useEffect(() => {
         const plus1 = document.getElementById('plus-1');
@@ -20,7 +16,7 @@ export const QuizQuestionPreheader = () => {
             plus1.classList.add('animate-score-toast');
             setTimeout(() => {
                 plus1.classList.remove('animate-score-toast');
-            }, 1000);
+            }, 750);
         }
     }, [state.numCorrect]);
 
@@ -30,19 +26,19 @@ export const QuizQuestionPreheader = () => {
             plus0.classList.add('animate-score-toast');
             setTimeout(() => {
                 plus0.classList.remove('animate-score-toast');
-            }, 1000);
+            }, 750);
         }
     }, [state.numIncorrect]);
 
     return (
         <div>
             <div className='flex justify-between items-center relative mb-6 w-full'>
-                <button
+                <Link
                     className='flex items-center gap-1 opacity-50 hover:opacity-100'
-                    onClick={reset}
+                    to='/'
                 >
                     <RiArrowGoBackFill /> Back
-                </button>
+                </Link>
                 <h3 className='opacity-100 text-sm uppercase font-semibold'>
                     Q{state.questionIndex + 1} of {state.selectedQuestions.length}
                 </h3>

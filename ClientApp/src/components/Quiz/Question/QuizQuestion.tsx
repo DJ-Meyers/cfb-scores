@@ -6,7 +6,7 @@ import { QuizQuestionCard } from "./QuizQuestionCard";
 export const QuizQuestion = () => {
 
     return (
-        <div className='w-96'>
+        <div className='w-full'>
             <QuizQuestionPreheader />
             <QuizQuestionCard />
             <QuizQuestionActions />

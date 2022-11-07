@@ -22,7 +22,7 @@ export const Quiz = () => {
     }, []);
 
     return (
-        <div className='flex justify-start items-center flex-col mx-auto w-96 pt-8 '>
+        <div className='flex justify-start items-center flex-col mx-auto w-80 pt-8 '>
             <h1 className='mb-3 opacity-100 text-3xl font-semibold w-full text-center'>
                 {state.team} Quiz
             </h1>
