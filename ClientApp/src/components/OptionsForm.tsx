@@ -8,10 +8,29 @@ import { useNavigate } from 'react-router-dom';
 import { QuizContext } from '../context/quiz/quizContext';
 import { INITIALIZE_QUIZ, PUT_STATE_IN_LOCAL_STORAGE, RESET_QUIZ } from '../context/Types';
 import { IconContext } from 'react-icons';
-import { GiPerspectiveDiceSixFacesThree } from 'react-icons/gi';
+// import { GiPerspectiveDiceSixFacesThree } from 'react-icons/gi';
+import { IoCalendarSharp } from 'react-icons/io5';
 import { CgSpinner } from 'react-icons/cg';
+import { Game } from '../data/game';
+
+export type QuizResponse = {
+    games: Game[];
+    team: string;
+    startYear: number;
+    endYear: number;
+    isDaily: boolean;
+    length?: number;
+}
 
 export const OptionsForm = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const { dispatch } = useContext(QuizContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch({ type: RESET_QUIZ });
+        // eslint-disable-next-line
+    }, []);
 
     const maxYear = 2021;
     const minYear = 1971;
@@ -37,24 +56,20 @@ export const OptionsForm = () => {
     });
     const watchTeam = watch('team', selectTeamString);
 
-    const [loading, setLoading] = useState(false);
-    const { dispatch } = useContext(QuizContext);
-    const navigate = useNavigate();
 
-    async function generateQuiz(formData: FormData) {
+    const generateQuiz = async (formData: FormData) => {
         await axios({
             method: 'post',
-            url: '/teamdata/',
+            url: '/teamquiz/',
             data: formData,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         }).then((res) => {
-            setLoading(false);
-
+            setIsLoading(false);
             dispatch({
                 type: INITIALIZE_QUIZ,
-                payload: { games: res.data, team: formData.get('name'), startYear: formData.get('startYear'), endYear: formData.get('endYear') },
+                payload: JSON.parse(res.data) as QuizResponse,
             });
             dispatch({ type: PUT_STATE_IN_LOCAL_STORAGE });
 
@@ -62,26 +77,24 @@ export const OptionsForm = () => {
         });
     }
 
-    useEffect(() => {
-        dispatch({ type: RESET_QUIZ });
-        // eslint-disable-next-line
-    }, []);
+    const generateDailyQuiz = async () => {
+        await axios({
+            method: 'post',
+            url: '/dailyquiz/',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        }).then((res) => {
+            setIsLoading(false);
+            dispatch({
+                type: INITIALIZE_QUIZ,
+                payload: JSON.parse(res.data) as QuizResponse,
+            });
+            dispatch({ type: PUT_STATE_IN_LOCAL_STORAGE });
 
-    const generateRandomQuiz = async () => {
-        const formData = new FormData();
-        const team = teams[Math.round(Math.random() * teams.length)];
-        const startYear = Math.round(Math.random() * (maxYear - minYear - 10) + minYear);
-        const endYear = startYear + 10;
-        const teamStr = team ? team.school : ''
-        formData.append('name', teamStr);
-        formData.append('startYear', startYear.toString());
-        formData.append('endYear', endYear.toString());
-
-        setLoading(true);
-
-        await generateQuiz(formData);
-
-    };
+            navigate('/quiz');
+        });
+    }
 
     const onSubmit = async (data: any, e: any) => {
 
@@ -90,7 +103,7 @@ export const OptionsForm = () => {
         formData.append('startYear', data.start);
         formData.append('endYear', data.end);
 
-        setLoading(true);
+        setIsLoading(true);
 
         generateQuiz(formData);
     };
@@ -158,7 +171,7 @@ export const OptionsForm = () => {
                 </div>
             </div>
             <div id='btns-container' className='flex gap-3'>
-                {loading ? (
+                {isLoading ? (
                     <button
                         className='bg-cyan-600 text-white font-medium rounded-md p-3 grow cursor-not-allowed flex items-center justify-center'
                         type='submit'
@@ -181,13 +194,29 @@ export const OptionsForm = () => {
                         }`}
                         type='submit'
                         value='Get Started'
-                        disabled={watchTeam === selectTeamString}
+                        disabled={watchTeam === selectTeamString || isLoading}
                     />
                 )}
                 <button
-                    className='bg-orange-400 font-medium rounded-md p-3 w-12 cursor-pointer'
+                    className='bg-green-500 rounded-md p-3 w-12 cursor-pointer'
+                    onClick={generateDailyQuiz}
                     type='button'
+                    disabled={isLoading}
+                >
+                    <IconContext.Provider
+                        value={{
+                            color: 'white',
+                            size: '24px'
+                        }}
+                    >
+                        <IoCalendarSharp />
+                    </IconContext.Provider>
+                </button>
+                {/* <button
+                    className='bg-orange-400 rounded-md p-3 w-12 cursor-pointer'
                     onClick={generateRandomQuiz}
+                    type='button'
+                    disabled={isLoading}
                 >
                     <IconContext.Provider
                         value={{
@@ -197,7 +226,7 @@ export const OptionsForm = () => {
                     >
                         <GiPerspectiveDiceSixFacesThree />
                     </IconContext.Provider>
-                </button>
+                </button> */}
             </div>
         </form>
     );

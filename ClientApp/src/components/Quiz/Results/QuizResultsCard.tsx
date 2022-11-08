@@ -6,7 +6,6 @@ import { getAbbr, percent, safeDivide } from '../../../context/quiz/quizHelpers'
 
 export const QuizResultsCard = () => {
     const { state } = useContext(QuizContext);
-
     return (
         <div className='w-full my-6 bg-white rounded-xl p-6 flex flex-col shadow-md relative'>
             <h3 className='mb-3 text-xl font-semibold text-center'>{state.numCorrect}/{state.selectedQuestions.length}: {percent(safeDivide(state.numCorrect, state.selectedQuestions.length))}</h3>
@@ -21,18 +20,18 @@ export const QuizResultsCard = () => {
                 <tbody>
                     {state.selectedQuestions &&
                         state.selectedQuestions.map((q, i) => {
+
+                            const date = new Date(q.StartDate).toLocaleDateString('en-US')
+                            const dateStr = date.substring(0, date.length - 4) + date.substring(date.length - 2);
                             return (
-                                <tr key={q.startDate} className={`${i % 2 === 1 && 'bg-gray-100'}`}>
+                                <tr key={q.StartDate} className={`${i % 2 === 1 && 'bg-gray-100'}`}>
                                     <td>
-                                        {new Date(
-                                            q.startDate
-                                        ).toLocaleDateString('en-US')}
+                                        {dateStr}
                                     </td>
                                     <td>
-                                        {getAbbr(q.homeTeam)} {q.homePoints} - {q.awayPoints} {getAbbr(q.awayTeam)}
+                                        {getAbbr(q.HomeTeam)} {q.HomePoints} - {q.AwayPoints} {getAbbr(q.AwayTeam)}
                                     </td>
-                                    <td className='flex justify-between items-center'>
-                                        <span>{state.choicesArray[i] ? 'Win' : 'Loss'}</span>
+                                    <td className='flex justify-center items-center'>
                                         {state.correctArray[i] ? (
                                             <IconContext.Provider
                                                 value={{

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Web;
@@ -16,7 +18,7 @@ using Azure.Security.KeyVault.Secrets;
 
 namespace cfb_scores.Controllers
 {
-    public class TeamDataForm
+    public class TeamQuizForm
     {
         public string name { get; set; }
 
@@ -27,28 +29,30 @@ namespace cfb_scores.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class TeamDataController : ControllerBase
+    [Produces("application/json")]
+    public class TeamQuizController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public TeamDataController(IConfiguration config)
+        public TeamQuizController(IConfiguration config)
         {
             _config = config;
+            try {
+                Configuration.Default.ApiKey.TryAdd("Authorization", _config["cfb-data-api-key"]);
+                Configuration
+                    .Default
+                    .ApiKeyPrefix
+                    .TryAdd("Authorization", "Bearer");
+            } catch(Exception e) {
+                // Do nothing
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<ICollection<Game>>>
-        Get([FromForm] TeamDataForm inputData)
-        {
+        public JsonResult Get([FromForm] TeamQuizForm inputData) {
             // Parse params
             int startYear = int.Parse(inputData.startYear);
             int endYear = int.Parse(inputData.endYear);
             string team = inputData.name;
-
-            Configuration.Default.ApiKey.TryAdd("Authorization", _config["cfb-data-api-key"]);
-            Configuration
-                .Default
-                .ApiKeyPrefix
-                .TryAdd("Authorization", "Bearer");
 
             IEnumerable<Game> games = new List<Game>();
             var apiInstance = new GamesApi();
@@ -60,12 +64,16 @@ namespace cfb_scores.Controllers
                         apiInstance.GetGames(year, null, null, team).ToList();
                     games = games.Concat(yearGames);
                 }
-                return Ok(games);
+                var res = new QuizResponse(games, team, startYear, endYear, 10, false);
+                var resJson = JsonSerializer.Serialize<QuizResponse>(res);
+                return new JsonResult(resJson);
             }
             catch (Exception e)
             {
                 Console.Write("Error: " + e.Message);
-                return Ok(games);
+                var res = new QuizResponse(games, team, startYear, endYear, 10, false);
+                var resJson = JsonSerializer.Serialize<QuizResponse>(res);
+                return new JsonResult(resJson);
             }
         }
     }

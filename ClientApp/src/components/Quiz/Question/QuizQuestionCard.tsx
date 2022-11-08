@@ -5,7 +5,6 @@ import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
 
 export const QuizQuestionCard = () => {
     const { state } = useContext(QuizContext);
-
     return (
         <React.Fragment>
             {state.currentQuestion &&
@@ -40,16 +39,16 @@ export const QuizQuestionCard = () => {
                     ) : null}
                     <h2 className='text-xl opacity-100 font-medium w-full text-center mb-6'>
                         {new Date(
-                            state.currentQuestion.startDate
+                            state.currentQuestion.StartDate
                         ).toLocaleDateString('en-US')}
                     </h2>
                     <h2
                         id='away-team'
                         className='text-3xl opacity-100 font-medium w-full text-center mb-3'
                     >
-                        {state.currentQuestion.awayTeam}{' '}
+                        {state.currentQuestion.AwayTeam}{' '}
                         {state.isBetweenQuestions
-                            ? state.currentQuestion.awayPoints
+                            ? state.currentQuestion.AwayPoints
                             : ''}
                     </h2>
                     <h2 className='text-3xl opacity-100 font-medium w-full text-center mb-3'>
@@ -59,9 +58,9 @@ export const QuizQuestionCard = () => {
                         id='home-team'
                         className='text-3xl opacity-100 font-medium w-full text-center mb-6'
                     >
-                        {state.currentQuestion.homeTeam}{' '}
+                        {state.currentQuestion.HomeTeam}{' '}
                         {state.isBetweenQuestions
-                            ? state.currentQuestion.homePoints
+                            ? state.currentQuestion.HomePoints
                             : ''}
                     </h2>
                 </div>

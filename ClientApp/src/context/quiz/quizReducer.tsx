@@ -1,4 +1,4 @@
-import { Game } from '../../data/game';
+import { QuizResponse } from '../../components/OptionsForm';
 import { INITIALIZE_QUIZ, NEXT_QUESTION, PUT_STATE_IN_LOCAL_STORAGE, RESET_QUIZ, RESTORE_STATE_FROM_LOCAL_STORAGE, SUBMIT_ANSWER } from '../Types';
 import { InitialQuizStateType } from './quizContext';
 import { shuffleGames } from './quizHelpers';
@@ -6,8 +6,10 @@ import { shuffleGames } from './quizHelpers';
 export const quizReducer = (state: InitialQuizStateType, action: { type: string, payload: any }) => {
     switch (action.type) {
         case INITIALIZE_QUIZ:
-            const games = action.payload.games as Game[];
-            const questions = shuffleGames(games);
+            const data: QuizResponse = action.payload as QuizResponse;
+            const games = data.games;
+            const questions = data.length ? shuffleGames(games, data.length) : games;
+
             return {
                 ...state,
                 games: games,
@@ -17,9 +19,14 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 numIncorrect: 0,
                 numAttempted: 0,
                 currentQuestion: questions[0],
-                team: action.payload.team,
-                startYear: action.payload.startYear,
-                endYear: action.payload.endYear,
+                correctAray: [],
+                choicesArray: [],
+                team: data.team,
+                startYear: data.startYear,
+                endYear: data.endYear,
+                isLoading: false,
+                isBetweenQuestions: false,
+                isDaily: data.isDaily,
             };
         case RESET_QUIZ:
             return {
@@ -36,6 +43,7 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 currentQuestion: null,
                 team: '',
                 isLoading: false,
+                isDaily: false,
             };
         case PUT_STATE_IN_LOCAL_STORAGE:
             localStorage.removeItem('quizState');
@@ -61,6 +69,7 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 startYear: newState.startYear,
                 endYear: newState.endYear,
                 isLoading: newState.isLoading,
+                isDaily: newState.isDaily,
             };
 
         case SUBMIT_ANSWER:
@@ -75,9 +84,9 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
             }
             const choseWin = action.payload;
             const homeTeamWon =
-                state.currentQuestion.homePoints >
-                state.currentQuestion.awayPoints;
-            const teamWasHome = state.currentQuestion.homeTeam === state.team;
+                state.currentQuestion.HomePoints >
+                state.currentQuestion.AwayPoints;
+            const teamWasHome = state.currentQuestion.HomeTeam === state.team;
             const teamDidWin = teamWasHome ? homeTeamWon : !homeTeamWon;
 
             const newCorrect =

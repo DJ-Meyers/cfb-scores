@@ -1,11 +1,11 @@
 import { Team } from "./teams";
 
 export interface Game {
-    id?: number,
-    season?: number,
-    startDate: string,
-    homePoints: number,
-    homeTeam: string,
-    awayPoints: number,
-    awayTeam: string,
+    Id?: number,
+    Season?: number,
+    StartDate: string,
+    HomePoints: number,
+    HomeTeam: string,
+    AwayPoints: number,
+    AwayTeam: string,
 }

@@ -23,8 +23,8 @@ export const Quiz = () => {
 
     return (
         <div className='flex justify-start items-center flex-col mx-auto w-80 pt-8 '>
-            <h1 className='mb-3 opacity-100 text-3xl font-semibold w-full text-center'>
-                {state.team} Quiz
+            <h1 className='mb-3 opacity-100 text-3xl font-semibold w-full text-center whitespace-pre-wrap'>
+                {state.isDaily ? `${new Date().toLocaleDateString()} Quiz\n${state.team} ${state.startYear}` : `${state.team} Quiz`}
             </h1>
             {state.questionIndex < state.selectedQuestions.length ? <QuizQuestion /> : <QuizResults />}
         </div>

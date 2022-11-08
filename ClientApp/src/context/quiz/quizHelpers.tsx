@@ -1,7 +1,7 @@
 import { Game } from "../../data/game";
 import { Team, teams } from "../../data/teams";
 
-export const shuffleGames = (games: Game[]): Game[] => {
+export const shuffleGames = (games: Game[], length: number): Game[] => {
     let currentIndex = games.length, randomIndex;
 
     // While there remain elements to shuffle.
@@ -17,7 +17,7 @@ export const shuffleGames = (games: Game[]): Game[] => {
         ];
     }
 
-    return games.slice(0, 10);
+    return games.slice(0, length);
 }
 
 export const getAbbr = (teamName: string): string => {

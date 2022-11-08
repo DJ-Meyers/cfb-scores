@@ -10,6 +10,5 @@ namespace cfb_scores.Models
     public class TeamData
     {
         public Team team { get; }
-
     }
 }

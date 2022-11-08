@@ -14,9 +14,9 @@ export const QuizResultsActions = () => {
         rows.push(`${getAbbr(state.team)} '${startYearStr}-'${endYearStr} ${state.numCorrect}/${state.selectedQuestions.length}`);
         rows.push('');
         state.selectedQuestions.forEach((game, index) => {
-            const dateString = new Date(game.startDate).toLocaleDateString()
+            const dateString = new Date(game.StartDate).toLocaleDateString()
             const correct = state.correctArray[index];
-            rows.push(`${correct ? '✅' : '❌'} ${getAbbr(game.awayTeam)}@${getAbbr(game.homeTeam)} '${dateString.substring(dateString.length - 2)}`);
+            rows.push(`${correct ? '✅' : '❌'} ${getAbbr(game.AwayTeam)}@${getAbbr(game.HomeTeam)} '${dateString.substring(dateString.length - 2)}`);
         });
         rows.push('https://bit.ly/cfb-record-quiz');
         return rows.join("\n");
@@ -24,7 +24,6 @@ export const QuizResultsActions = () => {
 
     const share = async () => {
         const shareText = getShareableString();
-        console.log(shareText);
         if (navigator.share) {
             await navigator.share({
                 title: 'CFB Results Quiz',

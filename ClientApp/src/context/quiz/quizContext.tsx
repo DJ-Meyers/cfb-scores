@@ -17,6 +17,7 @@ export type InitialQuizStateType = {
     startYear: number;
     endYear: number;
     isLoading: boolean;
+    isDaily: boolean;
 };
 
 
@@ -35,6 +36,7 @@ const initialState = {
     startYear: 0,
     endYear: 0,
     isLoading: false,
+    isDaily: false,
 };
 
 const QuizContext = createContext<{
