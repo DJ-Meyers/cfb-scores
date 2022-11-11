@@ -46,7 +46,7 @@ namespace cfb_scores.Controllers
             Random random = new Random(date);
 
             string team = Teams.teams[random.Next(0, 131)];
-            int startYear = random.Next(1972, 2021);
+            int startYear = random.Next(2000, 2021);
             int endYear = startYear;
 
             IEnumerable<Game> games = new List<Game>();
