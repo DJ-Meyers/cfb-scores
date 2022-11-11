@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useReducer } from 'react';
 import { Game } from '../../data/game';
+import { TeamGame } from '../../data/TeamGame';
 import { quizReducer } from './quizReducer';
 
 export type InitialQuizStateType = {
@@ -16,8 +17,9 @@ export type InitialQuizStateType = {
     team: string;
     startYear: number;
     endYear: number;
-    isLoading: boolean;
+    isLoadingBoxScores: boolean;
     isDaily: boolean;
+    stats: TeamGame[];
 };
 
 
@@ -35,8 +37,9 @@ const initialState = {
     team: '',
     startYear: 0,
     endYear: 0,
-    isLoading: false,
+    isLoadingBoxScores: false,
     isDaily: false,
+    stats: [],
 };
 
 const QuizContext = createContext<{

@@ -1,4 +1,5 @@
 import { Game } from "../../data/game";
+import { TeamGameStats } from "../../data/TeamGame";
 import { Team, teams } from "../../data/teams";
 
 export const shuffleGames = (games: Game[], length: number): Game[] => {
@@ -36,49 +37,10 @@ export const safeDivide = (numerator: number, divisor: number): number => {
     return numerator / divisor;
 }
 
+export const safeParseStat = (tgs: TeamGameStats | undefined) => {
+    return tgs ? parseInt(tgs.Stat) : 0;
+}
+
 export const percent = (num: number): string => {
     return `${(num * 100).toFixed(0)}%`
 }
-
-// const getColors = (team: Team): [string, string] => {
-//     return [team.color, team.alt_color];
-// }
-
-// const hexToRgb = (hex: string): [number, number, number] => {
-//     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-//     return result ? [
-//         parseInt(result[1], 16),
-//         parseInt(result[2], 16),
-//         parseInt(result[3], 16)
-//     ] : [0, 0, 0];
-// }
-
-// const colors = {
-//     '🟥': { r: 255, g: 0, b: 0 },
-//     '🟧': { r: 204, g: 102, b: 0 },
-//     '🟨': { r: 255, g: 255, b: 0 },
-//     '🟩': { r: 0, g: 255, b: 0 },
-//     '🟦': { r: 0, g: 0, b: 255 },
-//     '🟪': { r: 153, g: 0, b: 255 },
-//     '🟫': { r: 153, g: 51, b: 0 },
-//     '⬛': { r: 0, g: 0, b: 0 },
-//     '⬜': { r: 255, g: 255, b: 255 },
-// }
-
-// const getEmojiFromHex = (hex: string): string => {
-//     const [ r, g, b ] = hexToRgb(hex);
-//     const colorDiffs = [];
-
-//     // TODO: Calc distance
-//     return '';
-// }
-
-// export const getEmojiColors = (teamName: string): string => {
-//     const team: Team | undefined = teams.find((t) => t.school === teamName);
-//     if (!team) {
-//         return getAbbr(teamName);
-//     }
-//     const [primary, secondary] = getColors(team);
-
-//     return `${getEmojiFromHex(primary)}${getEmojiFromHex(secondary)}`;
-// }

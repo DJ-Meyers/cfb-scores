@@ -6,7 +6,7 @@ import axios from 'axios';
 import { teams } from '../data/teams';
 import { useNavigate } from 'react-router-dom';
 import { QuizContext } from '../context/quiz/quizContext';
-import { INITIALIZE_QUIZ, PUT_STATE_IN_LOCAL_STORAGE, RESET_QUIZ } from '../context/Types';
+import { INITIALIZE_QUIZ, PUT_STATE_IN_LOCAL_STORAGE, REQUEST_BOX_SCORES, RESET_QUIZ } from '../context/Types';
 import { IconContext } from 'react-icons';
 // import { GiPerspectiveDiceSixFacesThree } from 'react-icons/gi';
 import { IoCalendarSharp } from 'react-icons/io5';
@@ -71,6 +71,7 @@ export const OptionsForm = () => {
                 type: INITIALIZE_QUIZ,
                 payload: JSON.parse(res.data) as QuizResponse,
             });
+            dispatch({ type: REQUEST_BOX_SCORES });
             dispatch({ type: PUT_STATE_IN_LOCAL_STORAGE });
 
             navigate('/quiz');
@@ -90,6 +91,7 @@ export const OptionsForm = () => {
                 type: INITIALIZE_QUIZ,
                 payload: JSON.parse(res.data) as QuizResponse,
             });
+            dispatch({ type: REQUEST_BOX_SCORES });
             dispatch({ type: PUT_STATE_IN_LOCAL_STORAGE });
 
             navigate('/quiz');

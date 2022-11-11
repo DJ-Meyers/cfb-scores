@@ -1,5 +1,5 @@
 import { QuizResponse } from '../../components/OptionsForm';
-import { INITIALIZE_QUIZ, NEXT_QUESTION, PUT_STATE_IN_LOCAL_STORAGE, RESET_QUIZ, RESTORE_STATE_FROM_LOCAL_STORAGE, SUBMIT_ANSWER } from '../Types';
+import { INITIALIZE_QUIZ, NEXT_QUESTION, PUT_STATE_IN_LOCAL_STORAGE, REQUEST_BOX_SCORES, RESET_QUIZ, RESTORE_STATE_FROM_LOCAL_STORAGE, SET_BOX_SCORES, SUBMIT_ANSWER } from '../Types';
 import { InitialQuizStateType } from './quizContext';
 import { shuffleGames } from './quizHelpers';
 
@@ -24,7 +24,7 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 team: data.team,
                 startYear: data.startYear,
                 endYear: data.endYear,
-                isLoading: false,
+                isLoadingBoxScores: false,
                 isBetweenQuestions: false,
                 isDaily: data.isDaily,
             };
@@ -42,8 +42,9 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 isBetweenQuestions: false,
                 currentQuestion: null,
                 team: '',
-                isLoading: false,
+                isLoadingBoxScores: false,
                 isDaily: false,
+                stats: []
             };
         case PUT_STATE_IN_LOCAL_STORAGE:
             localStorage.removeItem('quizState');
@@ -68,8 +69,9 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 team: newState.team,
                 startYear: newState.startYear,
                 endYear: newState.endYear,
-                isLoading: newState.isLoading,
+                isLoadingBoxScores: newState.isLoadingBoxScores,
                 isDaily: newState.isDaily,
+                states: newState.stats,
             };
 
         case SUBMIT_ANSWER:
@@ -124,6 +126,17 @@ export const quizReducer = (state: InitialQuizStateType, action: { type: string,
                 questionIndex: newIndex,
                 currentQuestion: newCurrent,
                 isBetweenQuestions: false,
+            };
+        case REQUEST_BOX_SCORES:
+            return {
+                ...state,
+                isLoadingBoxScores: true
+            };
+        case SET_BOX_SCORES:
+            return {
+                ...state,
+                stats: action.payload,
+                isLoadingBoxScores: false,
             };
         default:
             return state;

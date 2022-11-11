@@ -1,5 +1,3 @@
-import { Team } from "./teams";
-
 export interface Game {
     Id?: number,
     Season?: number,
