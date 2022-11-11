@@ -24,8 +24,6 @@ export const QuizQuestionExtras = () => {
         // eslint-disable-next-line
     }, [state.selectedQuestions]);
 
-    console.log(state.isLoadingBoxScores, state.stats);
-
     if (state.isBetweenQuestions) { 
         if (state.stats[state.questionIndex] && state.selectedQuestions[state.questionIndex]) {
             const homeTeam = state.stats[state.questionIndex].Teams[0].School;
